@@ -48,11 +48,13 @@ public class InventoryController {
     // being performed on our POJOs
     // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
     public static void addToInventory() {
-        System.out.println("this should now prompt us instructions on adding our items to our inventory");
+        InventoryUi.optionAddToInventory();
     }
+
     public static void checkInventory() {
         System.out.println("this will check how many of each item we have");
     }
+
     public static void packageBox() {
         System.out.println("This will package our box and decrement loose inventory items");
     }
