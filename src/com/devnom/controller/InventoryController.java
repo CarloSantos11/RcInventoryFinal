@@ -13,8 +13,7 @@ public class InventoryController {
 
         while (!userInput.equalsIgnoreCase("Q")){
             InventoryUi.openingMenu();
-            userInput = getUserInput();
-            userInput =  inventoryActions(userInput);
+            inventoryActions(getUserInput());
         }
     }
 
@@ -44,15 +43,23 @@ public class InventoryController {
         return choice;
     }
 
+    public static String getQuantityAction(String choice) {
+        return choice;
+    }
+
     // Possibly move these methods to a controller class because they are actions
     // being performed on our POJOs
     // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
     public static void addToInventory() {
-        System.out.println("this should now prompt us instructions on adding our items to our inventory");
+        InventoryUi.promptAddToInventory();
+        getUserInput();
+        getQuantityAction(getUserInput());
     }
+
     public static void checkInventory() {
         System.out.println("this will check how many of each item we have");
     }
+
     public static void packageBox() {
         System.out.println("This will package our box and decrement loose inventory items");
     }

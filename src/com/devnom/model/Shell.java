@@ -5,3 +5,7 @@ public class Shell {
                  // Possibly use an enum?
                  // Same design decision as the frame
 }
+
+
+// MVP
+// minimum viable product....
