@@ -2,12 +2,12 @@ package com.devnom.controller;
 
 import com.devnom.view.InventoryUi;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InventoryController {
-
     // bootUp
-    // this method should prompt the first menu and keep the program running as long as we don't press quit
+    // this method should prompt the first menu and keep the program running as long as we don't press qu
     public static void bootUp() {
         String userInput = "";
 
@@ -49,7 +49,15 @@ public class InventoryController {
     // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
     public static void addToInventory() {
         System.out.println("this should now prompt us instructions on adding our items to our inventory");
+        InventoryUi.optionAddToInventory();
+        int choice = Integer.parseInt(getUserInput());
+        switch (choice){
+            case 1:
+
+        }
     }
+
+
     public static void checkInventory() {
         System.out.println("this will check how many of each item we have");
     }
