@@ -12,8 +12,8 @@ public class InventoryController {
         String userInput = "";
 
         while (!userInput.equalsIgnoreCase("Q")){
-            InventoryUi.openingMenu();
-            inventoryActions(getUserInput());
+            InventoryUi.promptOpeningMenu();
+            userInput = inventoryActions(getUserInput());
         }
     }
 
@@ -43,8 +43,11 @@ public class InventoryController {
         return choice;
     }
 
-    public static String getQuantityAction(String choice) {
-        return choice;
+    public static double getQuantityAction(String choice) {
+        double quantity = 0.0;
+
+        InventoryUi.promptItemQuantity(choice);
+        return quantity;
     }
 
     // Possibly move these methods to a controller class because they are actions

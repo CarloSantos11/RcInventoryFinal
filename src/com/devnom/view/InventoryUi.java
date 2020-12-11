@@ -6,7 +6,7 @@ public class InventoryUi {
 
 
 
-    public static void openingMenu() {
+    public static void promptOpeningMenu() {
         System.out.println(
                 "*************************************** \n" +
                         "       Welcome To The Inventory App\n" +
@@ -40,6 +40,14 @@ public class InventoryUi {
                     "\t\t3A: Standard Wheel\n" +
                     "\t\t3B: Wide Wheel\n"
 
+        );
+    }
+
+    public static void promptItemQuantity(String nameOfItem) {
+        System.out.println(
+                "************************************************************ \n" +
+                "       How Many of " + nameOfItem + " Will We Be Adding In? \n" +
+                "************************************************************ \n"
         );
     }
 }
