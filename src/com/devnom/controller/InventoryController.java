@@ -1,13 +1,16 @@
 package com.devnom.controller;
 
+import com.devnom.model.Inventory;
 import com.devnom.view.InventoryUi;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InventoryController {
     // bootUp
     // this method should prompt the first menu and keep the program running as long as we don't press qu
+
+    private static Inventory currentInventory = new Inventory();
+
     public static void bootUp() {
         String userInput = "";
 
@@ -53,6 +56,8 @@ public class InventoryController {
         int choice = Integer.parseInt(getUserInput());
         switch (choice){
             case 1:
+                currentInventory.addChargers(2);
+
 
         }
     }

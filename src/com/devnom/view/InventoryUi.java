@@ -1,8 +1,8 @@
 package com.devnom.view;
 
-import java.util.Scanner;
 
 public class InventoryUi {
+
 
 
 
