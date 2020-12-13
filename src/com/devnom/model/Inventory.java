@@ -10,6 +10,7 @@ public class Inventory {
     ArrayList<Wheel> wheels = new ArrayList<>();
     ArrayList<RemoteController> remoteControllers = new ArrayList<>();
     ArrayList<Charger> chargers = new ArrayList<>();
+    ArrayList<Frame> frames = new ArrayList<>();
 
 
     public boolean addBatteries(int count){
@@ -28,6 +29,17 @@ public class Inventory {
             for (int i = 0; i < count; i++) {
                 Motor motor = new Motor();
                 motors.add(motor);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addFrame(int count){
+        if (count>0) {
+            for (int i = 0; i < count; i++) {
+                Frame frame = new Frame();
+                frames.add(frame);
             }
             return true;
         }
