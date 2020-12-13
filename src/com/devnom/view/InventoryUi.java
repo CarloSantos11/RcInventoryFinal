@@ -5,9 +5,8 @@ import com.devnom.model.Shell;
 
 public class InventoryUi {
 
-
-
-
+    //this is a class with all static method because
+    // it doesn't hold any instance values, simply a grouping of methods
     public static void openingMenu() {
         System.out.println(
                 "*************************************** \n" +
@@ -20,10 +19,12 @@ public class InventoryUi {
         );
     }
 
-    public static void optionAddToInventory() {
+    public static void availableItemsPrompt(String whatToDo) {
+        //the string whatToDo asks if the prompt is for adding or checking the inventory
+        //this is to save redundant code
         System.out.println(
                 "************************************************************ \n" +
-                "       What Type Inventory Item Will We Be Adding In? \n" +
+                "                  Select a type to " + whatToDo +"\n"+
                 "************************************************************ \n" +
                         "\t1. Shell\n" +
                         "\t2. Charger\n" +
@@ -54,4 +55,19 @@ public class InventoryUi {
     public static void wheelTypePrompt(){
         System.out.println("Is the wheel wide?");
     }
+
+    public static void invalidInputPrompt(String whatIsWrong){
+        //the whatIsWrong asks for which input is incorrect so specified message can be sent
+        System.err.println("Invalid "+whatIsWrong+ ", Please enter again!");
+    }
+
+    public static void getCountPrompt(String item, int count){
+        System.out.println("The available number of "+ item + " is : " + count);
+    }
+
+    public static void successfulMessagePrompt(){
+        System.out.println("Task Successfully!");
+    }
+    //Even though the methods are just one line,
+    //they are separated for the proper implementation of MVC principals
 }

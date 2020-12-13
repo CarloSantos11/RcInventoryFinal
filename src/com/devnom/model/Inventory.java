@@ -24,91 +24,61 @@ public class Inventory {
         return false;
     }
 
-    public boolean addMotors(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Motor motor = new Motor();
-                motors.add(motor);
-            }
-            return true;
+    public void addMotors(int count){
+        for (int i = 0; i < count; i++) {
+            Motor motor = new Motor();
+            motors.add(motor);
         }
-        return false;
     }
 
-    public boolean addFrame(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Frame frame = new Frame();
-                frames.add(frame);
-            }
-            return true;
+    public void addFrame(int count){
+        for (int i = 0; i < count; i++) {
+            Frame frame = new Frame();
+            frames.add(frame);
         }
-        return false;
     }
 
-    public boolean addRemoteControllers(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                RemoteController remoteController = new RemoteController();
-                remoteControllers.add(remoteController);
-            }
-            return true;
+    public void addRemoteControllers(int count){
+        for (int i = 0; i < count; i++) {
+            RemoteController remoteController = new RemoteController();
+            remoteControllers.add(remoteController);
         }
-        return false;
     }
 
-    public boolean addBodyShell(int count,String bodyShellType,double price){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Shell bodyShell = new Shell(bodyShellType,price);
-                bodyShells.add(bodyShell);
-            }
-            return true;
+    public void addBodyShell(int count,String bodyShellType,double price){
+        for (int i = 0; i < count; i++) {
+            Shell bodyShell = new Shell(bodyShellType,price);
+            bodyShells.add(bodyShell);
         }
-        return false;
     }
 
-    public boolean addBodyShell(int count,String bodyShellType){
-        return addBodyShell(count,bodyShellType,0);
-
+    public void addBodyShell(int count,String bodyShellType){
+        addBodyShell(count,bodyShellType,0);
     }
 
-    public boolean addShocks(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Shocks shocks = new Shocks();
-                this.shocks.add(shocks);
-            }
-            return true;
+    public void addShocks(int count){
+        for (int i = 0; i < count; i++) {
+            Shocks shocks = new Shocks();
+            this.shocks.add(shocks);
         }
-        return false;
     }
 
-    public boolean addWheels(int count, boolean isWide, double price){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Wheel wheel = new Wheel(isWide,price);
-                wheels.add(wheel);
-            }
-            return true;
+    public void addWheels(int count, boolean isWide, double price){
+        for (int i = 0; i < count; i++) {
+            Wheel wheel = new Wheel(isWide,price);
+            wheels.add(wheel);
         }
-        return false;
     }
 
-    public boolean addWheels(int count, boolean isWide){
-        return addWheels(count,isWide,0);
-
+    public void addWheels(int count, boolean isWide){
+        addWheels(count,isWide,0);
     }
 
-    public boolean addChargers(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Charger charger = new Charger();
-                chargers.add(charger);
-            }
-            return true;
+    public void addChargers(int count){
+        for (int i = 0; i < count; i++) {
+            Charger charger = new Charger();
+            chargers.add(charger);
         }
-        return false;
     }
 
 
@@ -138,5 +108,9 @@ public class Inventory {
 
     public int getChargersCount() {
         return chargers.size();
+    }
+
+    public int getFrameCount(){
+        return frames.size();
     }
 }
