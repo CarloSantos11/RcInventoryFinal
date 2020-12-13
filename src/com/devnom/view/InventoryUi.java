@@ -53,7 +53,7 @@ public class InventoryUi {
     }
 
     public static void wheelTypePrompt(){
-        System.out.println("Is the wheel wide?");
+        System.out.println("Is the wheel wide? (Y/N)");
     }
 
     public static void invalidInputPrompt(String whatIsWrong){
@@ -66,7 +66,7 @@ public class InventoryUi {
     }
 
     public static void successfulMessagePrompt(){
-        System.out.println("Task Successfully!");
+        System.out.println("Task Completed Successfully!");
     }
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals

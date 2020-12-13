@@ -18,4 +18,20 @@ public enum ModelNumber {
         this.UPCPrefix = UPCPrefix;
         StartingCount = startingCount;
     }
+
+    public String getModelNumber() {
+        return modelNumber;
+    }
+
+    public String getUPCPrefix() {
+        return UPCPrefix;
+    }
+
+    public int getStartingCount() {
+        return StartingCount;
+    }
+
+    public void modelAdded(){
+        StartingCount++;
+    }
 }

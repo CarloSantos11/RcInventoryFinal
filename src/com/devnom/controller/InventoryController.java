@@ -3,6 +3,7 @@ package com.devnom.controller;
 import com.devnom.model.Inventory;
 import com.devnom.model.Shell;
 import com.devnom.view.InventoryUi;
+import com.devnom.model.ModelNumber;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,6 +25,7 @@ public class InventoryController {
     }
 
     // May add these into the controller directory as well
+
     public static String getUserInput(){
         Scanner userInput = new Scanner(System.in);
         return userInput.next();
@@ -52,6 +54,7 @@ public class InventoryController {
     // Possibly move these methods to a controller class because they are actions
     // being performed on our POJOs
     // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
+
     public static void addToInventory() {
 
         InventoryUi.availableItemsPrompt("Add");
@@ -110,9 +113,22 @@ public class InventoryController {
                 break;
             case 5:
                 InventoryUi.wheelTypePrompt();
+                String wheelType = getUserInput().toLowerCase();
+
                 int price = 30;
-                boolean isWide = getUserInput().equalsIgnoreCase("Y") ? true : false;
-                currentInventory.addWheels(count, isWide, price);
+                boolean isWide = false;
+
+                boolean validWheelType = false;
+                while(!validWheelType) {
+                    if (wheelType.equals("y")||wheelType.equals("n")){
+                        validWheelType = true;
+                        isWide = wheelType.equals("y");
+                    }else {
+                        InventoryUi.invalidInputPrompt("Wheel Type");
+                        wheelType = getUserInput().toLowerCase();
+                    }
+                }
+                currentInventory.addWheels(count,isWide, price);
                 break;
             case 6:
                 currentInventory.addRemoteControllers(count);
@@ -128,7 +144,6 @@ public class InventoryController {
 
 
     }
-
 
     public static void checkInventory() {//this checks how many items we have
         InventoryUi.availableItemsPrompt("Check  Count");
@@ -173,7 +188,7 @@ public class InventoryController {
 
 
     }
+
     public static void packageBox() {
-        System.out.println("This will package our box and decrement loose inventory items");
     }
 }
