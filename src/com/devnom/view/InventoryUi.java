@@ -3,7 +3,12 @@ package com.devnom.view;
 
 import com.devnom.model.Shell;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class InventoryUi {
+    public static ArrayList<String> shellTypes = new ArrayList<>
+            (Arrays.asList("Sport","SUV","Classic","ATV","Dune Buggy","Crawlers"));
 
     //this is a class with all static method because
     // it doesn't hold any instance values, simply a grouping of methods
@@ -68,6 +73,29 @@ public class InventoryUi {
     public static void successfulMessagePrompt(){
         System.out.println("Task Completed Successfully!");
     }
+
+    public static void carTypePrompt(){
+        System.out.println("Select the type of car you want :\nWe have two :\n1. Off-Road 2. Sports");
+    }
+
+    public static void shellChoosingPrompt(String carType){
+        if(carType.equalsIgnoreCase("Street")){
+            System.out.println("Choose a Shell Type :");
+            System.out.println("Available Types : \n"+
+                    "1. "+shellTypes.get(0)+" \n"+
+                    "2. "+shellTypes.get(1)+" \n"+
+                    "3. "+shellTypes.get(2));
+        }else {
+            System.out.println("Choose a Shell Type :");
+            System.out.println("Available Types : \n"+
+                    "1. "+shellTypes.get(3)+" \n"+
+                    "2. "+shellTypes.get(4)+" \n"+
+                    "3. "+shellTypes.get(5));
+        }
+    }
+
+
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals
+
 }

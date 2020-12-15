@@ -190,5 +190,47 @@ public class InventoryController {
     }
 
     public static void packageBox() {
+
+        InventoryUi.carTypePrompt();
+        int choice = Integer.parseInt(getUserInput());
+        boolean validInput=false;
+        while (!validInput) {
+            if (choice>2||choice<1){
+                InventoryUi.invalidInputPrompt("Input");
+                choice = Integer.parseInt(getUserInput());
+            }else {
+                validInput= true;
+            }
+        }
+        String carType;
+        if (choice==1) {
+            carType = "Off-Road";
+        }else {
+            carType = "Street";
+        }
+
+        String bodyShellType;
+        InventoryUi.shellChoosingPrompt(carType);
+        choice = Integer.parseInt(getUserInput());
+        validInput=false;
+        while (!validInput) {
+            if (choice>3||choice<1){
+                InventoryUi.invalidInputPrompt("Input");
+                choice = Integer.parseInt(getUserInput());
+            }else {
+                validInput= true;
+            }
+        }
+        if(carType.equals("Off-Road")){
+            bodyShellType = InventoryUi.shellTypes.get(choice+3);
+            System.out.println(bodyShellType);
+        }
+        else {
+            bodyShellType = InventoryUi.shellTypes.get(choice);
+            System.out.println(bodyShellType);
+        }
+
+         boolean wideWheels = carType.equals("Off-Road");
+
     }
 }
