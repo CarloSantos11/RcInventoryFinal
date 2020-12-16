@@ -1,4 +1,4 @@
 package com.devnom.model;
 
-public class Motor {
+public class Motor extends InventoryItem {
 }

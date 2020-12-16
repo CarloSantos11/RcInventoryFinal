@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class InventoryUi {
     public static ArrayList<String> shellTypes = new ArrayList<>
-            (Arrays.asList("Sport","SUV","Classic","ATV","Dune Buggy","Crawlers"));
+            (Arrays.asList("Sport","SUV","Classic","ATV","Dune Buggy","Crawlers","Military","Trucks"));
 
     //this is a class with all static method because
     // it doesn't hold any instance values, simply a grouping of methods

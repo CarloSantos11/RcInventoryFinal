@@ -1,6 +1,6 @@
 package com.devnom.model;
 
-public class Wheel {
+public class Wheel extends InventoryItem{
     boolean isWide;
     double price;
 

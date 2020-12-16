@@ -1,4 +1,4 @@
 package com.devnom.model;
 
-public class Charger {
+public class Charger extends InventoryItem{
 }

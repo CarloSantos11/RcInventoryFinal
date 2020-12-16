@@ -3,7 +3,7 @@ package com.devnom.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Shell {
+public class Shell extends InventoryItem{
     String type;
     double price;
 

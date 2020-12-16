@@ -1,8 +1,9 @@
 package com.devnom.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
-public class Inventory {
+public class Inventory<Item extends InventoryItem> {
+
     ArrayList<Battery> batteries = new ArrayList<>();
     ArrayList<Motor> motors = new ArrayList<>();
     ArrayList<Shell> bodyShells = new ArrayList<>();
@@ -12,16 +13,14 @@ public class Inventory {
     ArrayList<Charger> chargers = new ArrayList<>();
     ArrayList<Frame> frames = new ArrayList<>();
 
+    public static ArrayList<String> shellTypes = new ArrayList<>
+            (Arrays.asList("sport","suv","classic","atv","dune buggy","crawlers","military","trucks"));
 
-    public boolean addBatteries(int count){
-        if (count>0) {
-            for (int i = 0; i < count; i++) {
-                Battery battery = new Battery();
-                batteries.add(battery);
-            }
-            return true;
+    public void addBatteries(int count){
+        for (int i = 0; i < count; i++) {
+            Battery battery = new Battery();
+            batteries.add(battery);
         }
-        return false;
     }
 
     public void addMotors(int count){
@@ -46,9 +45,30 @@ public class Inventory {
     }
 
     public void addBodyShell(int count,String bodyShellType,double price){
-        for (int i = 0; i < count; i++) {
-            Shell bodyShell = new Shell(bodyShellType,price);
-            bodyShells.add(bodyShell);
+        bodyShellType =bodyShellType.toLowerCase();
+        if (shellTypes.contains(bodyShellType)){
+            for (int i=0;i<count;i++){
+                Shell bodyShell = new Shell(bodyShellType,price);
+                bodyShells.add(bodyShell);
+                switch (bodyShellType){
+                    case "sport":
+                        BodyShellTypes.Sport.incrementCount(count);
+                    case "suv":
+                        BodyShellTypes.SUV.incrementCount(count);
+                    case "atv":
+                        BodyShellTypes.ATV.incrementCount(count);
+                    case "military":
+                        BodyShellTypes.Military.incrementCount(count);
+                    case "trucks":
+                        BodyShellTypes.Trucks.incrementCount(count);
+                    case "classic":
+                        BodyShellTypes.Classic.incrementCount(count);
+                    case "dune buggy":
+                        BodyShellTypes.DuneBuggy.incrementCount(count);
+                    case "crawlers":
+                        BodyShellTypes.Crawlers.incrementCount(count);
+                }
+            }
         }
     }
 
@@ -70,17 +90,12 @@ public class Inventory {
         }
     }
 
-    public void addWheels(int count, boolean isWide){
-        addWheels(count,isWide,0);
-    }
-
     public void addChargers(int count){
         for (int i = 0; i < count; i++) {
             Charger charger = new Charger();
             chargers.add(charger);
         }
     }
-
 
     public int getBatteryCount() {
         return batteries.size();
@@ -91,7 +106,7 @@ public class Inventory {
     }
 
     public int getBodyShellsCount() {
-        return bodyShells.size();
+        return BodyShellTypes.totalCount();
     }
 
     public int getShocksCount() {
@@ -113,4 +128,101 @@ public class Inventory {
     public int getFrameCount(){
         return frames.size();
     }
+
+    public boolean removeBatteries(int count){
+        if (getBatteryCount()>=count){
+            for (int i=0;i<count;i++){
+                batteries.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeFrame(int count){
+        if (getFrameCount()>=count){
+            for (int i=0;i<count;i++){
+                frames.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeMotors(int count){
+        if (getMotorsCount()>=count){
+            for (int i=0;i<count;i++){
+                motors.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeShocks(int count){
+        if (getShocksCount()>=count){
+            for (int i=0;i<count;i++){
+                shocks.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeRemoteControllers(int count){
+        if (getRemoteControllerCount()>=count){
+            for (int i=0;i<count;i++){
+                remoteControllers.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeChargers(int count){
+        if (getChargersCount()>=count){
+            for (int i=0;i<count;i++){
+                chargers.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeBodyShell(int count){
+        if (getBodyShellsCount()>=count){
+            for (int i=0;i<count;i++){
+                bodyShells.remove(i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeBodyShell(int count, String bodyShellType){
+        switch (bodyShellType){
+            case "sport":
+                return BodyShellTypes.Sport.decrementCount(count);
+            case "suv":
+                return BodyShellTypes.SUV.decrementCount(count);
+            case "atv":
+                return BodyShellTypes.ATV.decrementCount(count);
+            case "military":
+                return BodyShellTypes.Military.decrementCount(count);
+            case "trucks":
+                return BodyShellTypes.Trucks.decrementCount(count);
+            case "classic":
+                return BodyShellTypes.Classic.decrementCount(count);
+            case "dune buggy":
+                return BodyShellTypes.DuneBuggy.decrementCount(count);
+            case "crawlers":
+                return BodyShellTypes.Crawlers.decrementCount(count);
+        }
+        return false;
+    }
+
+    public boolean removeWheels(){
+        return false;
+    }
+
 }

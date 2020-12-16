@@ -1,4 +1,5 @@
 package com.devnom.model;
 
-public class Box {
+public class Box extends InventoryItem{
+
 }

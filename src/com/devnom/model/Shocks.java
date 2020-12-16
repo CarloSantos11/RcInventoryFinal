@@ -1,4 +1,4 @@
 package com.devnom.model;
 
-public class Shocks {
+public class Shocks extends InventoryItem{
 }

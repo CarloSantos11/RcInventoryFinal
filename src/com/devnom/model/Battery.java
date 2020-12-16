@@ -1,4 +1,4 @@
 package com.devnom.model;
 
-public class Battery {
+public class Battery extends InventoryItem{
 }

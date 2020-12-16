@@ -1,4 +1,6 @@
 package com.devnom.model;
 
-public class RemoteController {
+public class RemoteController extends InventoryItem{
+
+
 }
