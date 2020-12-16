@@ -13,6 +13,9 @@ public class Inventory<Item extends InventoryItem> {
     ArrayList<Charger> chargers = new ArrayList<>();
     ArrayList<Frame> frames = new ArrayList<>();
 
+    ArrayList<Wheel> wideWheels = new ArrayList<>();
+    ArrayList<Wheel> normalWheels = new ArrayList<>();
+
     public static ArrayList<String> shellTypes = new ArrayList<>
             (Arrays.asList("sport","suv","classic","atv","dune buggy","crawlers","military","trucks"));
 
@@ -87,6 +90,11 @@ public class Inventory<Item extends InventoryItem> {
         for (int i = 0; i < count; i++) {
             Wheel wheel = new Wheel(isWide,price);
             wheels.add(wheel);
+            if (isWide){
+                wideWheels.add(wheel);
+            }else {
+                normalWheels.add(wheel);
+            }
         }
     }
 
@@ -127,6 +135,14 @@ public class Inventory<Item extends InventoryItem> {
 
     public int getFrameCount(){
         return frames.size();
+    }
+
+    public int getWideWheelsCount(){
+        return wideWheels.size();
+    }
+
+    public int getNormalWheelsCount(){
+        return normalWheels.size();
     }
 
     public boolean removeBatteries(int count){
@@ -221,7 +237,26 @@ public class Inventory<Item extends InventoryItem> {
         return false;
     }
 
-    public boolean removeWheels(){
+    public boolean removeWheels(int count, boolean isWide){
+        if (getWheelsCount()>=count){
+            if (isWide && getWideWheelsCount()>=count){
+                for (int i=0;i<count;i++){
+                    Wheel wheel = wideWheels.get(i);
+                    wheels.remove(wheel);
+                    wideWheels.remove(i);
+                }
+                return true;
+            }else if(getNormalWheelsCount()>=count){
+                for (int i=0;i<count;i++){
+                    Wheel wheel = wideWheels.get(i);
+                    wheels.remove(wheel);
+                    normalWheels.remove(i);
+                }
+                return true;
+            }
+            return false;
+
+        }
         return false;
     }
 
