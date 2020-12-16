@@ -214,7 +214,7 @@ public class Inventory{
         return false;
     }
 
-    public boolean removeBodyShell(int count){
+    private boolean removeBodyShell(int count){
         if (getBodyShellsCount()>=count){
             for (int i=0;i<count;i++){
                 bodyShells.remove(i);
@@ -225,6 +225,7 @@ public class Inventory{
     }
 
     public boolean removeBodyShell(int count, String bodyShellType){
+        removeBodyShell(count);
         switch (bodyShellType){
             case "sport":
                 return BodyShellTypes.Sport.decrementCount(count);

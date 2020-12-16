@@ -4,7 +4,6 @@ import com.devnom.model.BodyShellTypes;
 import com.devnom.model.Inventory;
 import com.devnom.model.Shell;
 import com.devnom.view.InventoryUi;
-import com.devnom.model.ModelNumber;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,7 +12,7 @@ public class InventoryController {
     // bootUp
     // this method should prompt the first menu and keep the program running as long as we don't press qu
 
-    private static Inventory currentInventory = new Inventory();
+    private static final Inventory currentInventory = new Inventory();
 
     public static void bootUp() {
         String userInput = "";
@@ -41,8 +40,12 @@ public class InventoryController {
                 choice = "2";
                 break;
             case "3":
-                packageBox();
+                removeItems();
                 choice = "3";
+                break;
+            case "4":
+                packageBox();
+                choice = "4";
                 break;
             default:
                 choice = "Q";
@@ -69,14 +72,14 @@ public class InventoryController {
             }
         }
 
-        InventoryUi.countPrompt();
+        InventoryUi.countPrompt("Add");
         int count = Integer.parseInt(getUserInput());
         boolean validInput = false;//as the addItems()methods return a boolean if there's a problem adding, this checks for the invalid inputs
 
         while (!validInput) {
             if (count < 0) {
                 InventoryUi.invalidInputPrompt("count");
-                InventoryUi.countPrompt();
+                InventoryUi.countPrompt("Add");
                 count = Integer.parseInt(getUserInput());
             } else validInput = true;
         }
@@ -86,10 +89,10 @@ public class InventoryController {
                 InventoryUi.shellTypePrompt();
                 String bodyShellType = getUserInput();
                 bodyShellType = bodyShellType.toLowerCase();
-                ArrayList<?> shell = Shell.shellTypes;
+                ArrayList<String> shell = Shell.shellTypes;
                 if (shell.contains(bodyShellType)) {
-                    if (shell.equals("military") || shell.equals("trucks")) {
-                        currentInventory.addBodyShell(count, bodyShellType, 20);
+                    if (shell.contains("military") || shell.contains("trucks")) {
+                        currentInventory.addBodyShell(count, bodyShellType, 200);
                     } else {
                         currentInventory.addBodyShell(count, bodyShellType);
                     }
@@ -200,7 +203,9 @@ public class InventoryController {
 
     public static void packageBox() {
 
+        //Choosing the Car Type
         InventoryUi.carTypePrompt();
+        boolean isStreet;
         int choice = Integer.parseInt(getUserInput());
         boolean validInput=false;
         while (!validInput) {
@@ -214,32 +219,154 @@ public class InventoryController {
         String carType;
         if (choice==1) {
             carType = "Off-Road";
+            isStreet = false;
         }else {
             carType = "Street";
+            isStreet =true;
         }
 
+
+        //Choosing a Body Shell
         String bodyShellType;
         InventoryUi.shellChoosingPrompt(carType);
         choice = Integer.parseInt(getUserInput());
         validInput=false;
         while (!validInput) {
-            if (choice>3||choice<1){
+            if (choice>5||choice<1){
                 InventoryUi.invalidInputPrompt("Input");
                 choice = Integer.parseInt(getUserInput());
             }else {
                 validInput= true;
             }
         }
-        if(carType.equals("Off-Road")){
-            bodyShellType = InventoryUi.shellTypes.get(choice+3);
-            System.out.println(bodyShellType);
+        if(!isStreet){
+            bodyShellType = InventoryUi.shellTypes.get(choice-1);
         }
         else {
-            bodyShellType = InventoryUi.shellTypes.get(choice);
-            System.out.println(bodyShellType);
+            bodyShellType = InventoryUi.shellTypes.get(choice+2);
+        }
+        validate(currentInventory.removeBodyShell(1,bodyShellType),"Body Shell");
+
+        //Choosing a Wheel Type
+        if (!isStreet){
+            InventoryUi.wheelTypePrompt();
+
+            boolean isWide;
+            String wheelType = getUserInput().toLowerCase();
+
+            boolean validWheelType = false;
+            while(!validWheelType) {
+                if (wheelType.equals("y")||wheelType.equals("n")){
+                    validWheelType = true;
+                    isWide = wheelType.equals("y");
+                    validate(currentInventory.removeWheels(1,isWide),"Wheels");
+                }else {
+                    InventoryUi.invalidInputPrompt("Wheel Type");
+                    wheelType = getUserInput().toLowerCase();
+                }
+            }
+        } else {
+            validate(currentInventory.removeWheels(1,false),"Wheels");
         }
 
-         boolean wideWheels = carType.equals("Off-Road");
+        //removing all other items
+        validate(currentInventory.removeBatteries(1),"Batteries");
+        validate(currentInventory.removeChargers(1),"Chargers");
+        validate(currentInventory.removeFrame(1),"Frame");
+        validate(currentInventory.removeMotors(1),"Motors");
+        validate(currentInventory.removeRemoteControllers(1),"Remote Controller");
+        validate(currentInventory.removeShocks(1),"Shocks");
 
+        InventoryUi.successfulMessagePrompt();
+
+
+    }
+
+    public static void removeItems(){
+        InventoryUi.availableItemsPrompt("Remove");
+        boolean correctInput = false;
+        int choice = Integer.parseInt(getUserInput());
+
+        while(!correctInput) {
+            if (choice > 0 && choice < 9) {
+                correctInput = true;
+            } else {
+                InventoryUi.invalidInputPrompt("Input");
+                choice = Integer.parseInt(getUserInput());
+            }
+        }
+
+        InventoryUi.countPrompt("Remove");
+        int count = Integer.parseInt(getUserInput());
+        boolean validInput = false;
+        while (!validInput) {
+            if (count < 0) {
+                InventoryUi.invalidInputPrompt("count");
+                InventoryUi.countPrompt("Remove");
+                count = Integer.parseInt(getUserInput());
+            } else validInput = true;
+        }
+
+        switch (choice) {
+            case 1:
+                InventoryUi.shellTypePrompt();
+                String bodyShellType = getUserInput();
+                bodyShellType = bodyShellType.toLowerCase();
+                ArrayList<String> shell = Shell.shellTypes;
+                if (shell.contains(bodyShellType)) {
+                        validate(currentInventory.removeBodyShell(count,bodyShellType),"Shell");
+                } else {
+                    while (!shell.contains(bodyShellType)) {
+                        InventoryUi.invalidInputPrompt("Shell type");
+                        InventoryUi.shellTypePrompt();
+                        bodyShellType = getUserInput().toLowerCase();
+                    }
+                }
+                break;
+            case 2:
+                validate(currentInventory.removeChargers(count),"Charger");
+                break;
+            case 3:
+                validate(currentInventory.removeMotors(count),"Motor");
+                break;
+            case 4:
+                validate(currentInventory.removeShocks(count),"Shocks");
+                break;
+            case 5:
+                InventoryUi.wheelTypePrompt();
+                String wheelType = getUserInput().toLowerCase();
+
+                boolean isWide = false;
+
+                boolean validWheelType = false;
+                while(!validWheelType) {
+                    if (wheelType.equals("y")||wheelType.equals("n")){
+                        validWheelType = true;
+                        isWide = wheelType.equals("y");
+                    }else {
+                        InventoryUi.invalidInputPrompt("Wheel Type");
+                        wheelType = getUserInput().toLowerCase();
+                    }
+                }
+                validate(currentInventory.removeWheels(count,isWide),"Wheels");
+                break;
+            case 6:
+                validate(currentInventory.removeRemoteControllers(count),"Remote Controller");
+                break;
+            case 7:
+                validate(currentInventory.removeFrame(count),"Frame");
+                break;
+            case 8:
+                validate(currentInventory.removeBatteries(count),"Battery");
+                break;
+        }
+        InventoryUi.successfulMessagePrompt();
+
+    }
+
+    protected static void validate(boolean valid,String item){
+        if (!valid){
+            InventoryUi.notEnoughCountPrompt(item);
+        }
     }
 }

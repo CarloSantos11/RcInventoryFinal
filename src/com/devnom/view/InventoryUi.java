@@ -19,7 +19,8 @@ public class InventoryUi {
                         "*************************************** \n" +
                         "\t1. Add to Inventory\n" +
                         "\t2. Check Inventory\n" +
-                        "\t3. Package\n" +
+                        "\t3. Remove Items\n" +
+                        "\t4. Package\n"+
                         "\t\tQ to exit...\n"
         );
     }
@@ -42,8 +43,8 @@ public class InventoryUi {
         );
     }
 
-    public static void countPrompt(){
-        System.out.println("Enter the number you want to add :");
+    public static void countPrompt(String whatToDo){
+        System.out.println("Enter the number you want to "+ whatToDo+ " :");
     }
 
     public static void carTypePrompt(){
@@ -52,12 +53,12 @@ public class InventoryUi {
 
     public static void shellTypePrompt(){
         System.out.println("Enter the type of the Shell.\n"
-                +"We have the following types :");
+                +"Available Shells :");
         System.out.println(Shell.shellTypes1.toString());
     }
 
     public static void wheelTypePrompt(){
-        System.out.println("Is the wheel wide? (Y/N)");
+        System.out.println("Do you want the wheels to be wide? (Y/N)");
     }
 
     public static void invalidInputPrompt(String whatIsWrong){
@@ -78,21 +79,28 @@ public class InventoryUi {
     }
 
     public static void shellChoosingPrompt(String carType){
-        if(carType.equalsIgnoreCase("Street")){
+        if(carType.equalsIgnoreCase("Off-Road")){
             System.out.println("Choose a Shell Type :");
             System.out.println("Available Types : \n"+
                     "1. "+shellTypes.get(0)+" \n"+
                     "2. "+shellTypes.get(1)+" \n"+
-                    "3. "+shellTypes.get(2));
+                    "3. "+shellTypes.get(2)+" \n" +
+                    "4. "+shellTypes.get(6)+" (Price : 200)\n" +
+                    "5. "+shellTypes.get(7)+" (Price : 200)");
         }else {
             System.out.println("Choose a Shell Type :");
             System.out.println("Available Types : \n"+
                     "1. "+shellTypes.get(3)+" \n"+
                     "2. "+shellTypes.get(4)+" \n"+
-                    "3. "+shellTypes.get(5));
+                    "3. "+shellTypes.get(5)+" \n"+
+                    "4. "+shellTypes.get(6)+"  (Price : 200)\n" +
+                    "5. "+ shellTypes.get(7)+" (Price : 200)");
         }
     }
 
+    public static void notEnoughCountPrompt(String item){
+        System.err.println("Not Enough " + item);
+    }
 
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals
