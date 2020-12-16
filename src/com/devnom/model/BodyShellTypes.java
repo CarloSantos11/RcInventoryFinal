@@ -1,6 +1,6 @@
 package com.devnom.model;
 
-enum BodyShellTypes {
+public enum BodyShellTypes {
     Sport(true,false,0),
     SUV(true,false,0),
     Classic(true,false,0),

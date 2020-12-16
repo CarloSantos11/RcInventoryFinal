@@ -2,7 +2,7 @@ package com.devnom.model;
 
 import java.util.*;
 
-public class Inventory<Item extends InventoryItem> {
+public class Inventory{
 
     ArrayList<Battery> batteries = new ArrayList<>();
     ArrayList<Motor> motors = new ArrayList<>();
@@ -50,28 +50,37 @@ public class Inventory<Item extends InventoryItem> {
     public void addBodyShell(int count,String bodyShellType,double price){
         bodyShellType =bodyShellType.toLowerCase();
         if (shellTypes.contains(bodyShellType)){
-            for (int i=0;i<count;i++){
-                Shell bodyShell = new Shell(bodyShellType,price);
+            for (int i=0;i<count;i++) {
+                Shell bodyShell = new Shell(bodyShellType, price);
                 bodyShells.add(bodyShell);
-                switch (bodyShellType){
-                    case "sport":
-                        BodyShellTypes.Sport.incrementCount(count);
-                    case "suv":
-                        BodyShellTypes.SUV.incrementCount(count);
-                    case "atv":
-                        BodyShellTypes.ATV.incrementCount(count);
-                    case "military":
-                        BodyShellTypes.Military.incrementCount(count);
-                    case "trucks":
-                        BodyShellTypes.Trucks.incrementCount(count);
-                    case "classic":
-                        BodyShellTypes.Classic.incrementCount(count);
-                    case "dune buggy":
-                        BodyShellTypes.DuneBuggy.incrementCount(count);
-                    case "crawlers":
-                        BodyShellTypes.Crawlers.incrementCount(count);
-                }
             }
+            switch (bodyShellType){
+                case "sport":
+                    BodyShellTypes.Sport.incrementCount(count);
+                    break;
+                case "suv":
+                    BodyShellTypes.SUV.incrementCount(count);
+                    break;
+                case "atv":
+                    BodyShellTypes.ATV.incrementCount(count);
+                    break;
+                case "military":
+                    BodyShellTypes.Military.incrementCount(count);
+                    break;
+                case "trucks":
+                    BodyShellTypes.Trucks.incrementCount(count);
+                    break;
+                case "classic":
+                    BodyShellTypes.Classic.incrementCount(count);
+                    break;
+                case "dune buggy":
+                    BodyShellTypes.DuneBuggy.incrementCount(count);
+                    break;
+                case "crawlers":
+                    BodyShellTypes.Crawlers.incrementCount(count);
+                    break;
+            }
+
         }
     }
 

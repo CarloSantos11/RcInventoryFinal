@@ -1,5 +1,6 @@
 package com.devnom.controller;
 
+import com.devnom.model.BodyShellTypes;
 import com.devnom.model.Inventory;
 import com.devnom.model.Shell;
 import com.devnom.view.InventoryUi;
@@ -23,8 +24,6 @@ public class InventoryController {
             userInput =  inventoryActions(userInput);
         }
     }
-
-    // May add these into the controller directory as well
 
     public static String getUserInput(){
         Scanner userInput = new Scanner(System.in);
@@ -162,6 +161,14 @@ public class InventoryController {
         switch (choice) {
             case 1:
                 InventoryUi.getCountPrompt("Body Shell", currentInventory.getBodyShellsCount());
+                InventoryUi.subItemCountPrompt("Sport", BodyShellTypes.Sport.getCount());
+                InventoryUi.subItemCountPrompt("Classic", BodyShellTypes.Classic.getCount());
+                InventoryUi.subItemCountPrompt("Crawlers", BodyShellTypes.Crawlers.getCount());
+                InventoryUi.subItemCountPrompt("ATV", BodyShellTypes.ATV.getCount());
+                InventoryUi.subItemCountPrompt("Dune Buggy", BodyShellTypes.DuneBuggy.getCount());
+                InventoryUi.subItemCountPrompt("SUV", BodyShellTypes.SUV.getCount());
+                InventoryUi.subItemCountPrompt("Military", BodyShellTypes.Military.getCount());
+                InventoryUi.subItemCountPrompt("Trucks", BodyShellTypes.Trucks.getCount());
                 break;
             case 2:
                 InventoryUi.getCountPrompt("Charger",currentInventory.getChargersCount());
@@ -174,6 +181,8 @@ public class InventoryController {
                 break;
             case 5:
                 InventoryUi.getCountPrompt("Wheels" ,currentInventory.getWheelsCount());
+                InventoryUi.subItemCountPrompt("Wide Wheels", currentInventory.getWideWheelsCount());
+                InventoryUi.subItemCountPrompt("Normal Wheels", currentInventory.getNormalWheelsCount());
                 break;
             case 6:
                 InventoryUi.getCountPrompt("Controller",currentInventory.getRemoteControllerCount());

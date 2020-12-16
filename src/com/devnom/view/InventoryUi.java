@@ -46,15 +46,14 @@ public class InventoryUi {
         System.out.println("Enter the number you want to add :");
     }
 
+    public static void carTypePrompt(){
+        System.out.println("Select the type of car you want :\nWe have two :\n1. Off-Road 2. Sports");
+    }
+
     public static void shellTypePrompt(){
         System.out.println("Enter the type of the Shell.\n"
                 +"We have the following types :");
         System.out.println(Shell.shellTypes1.toString());
-    }
-
-    public static void wrongShellTypePrompt(){
-        System.err.println("The entered shell type doesn't exist!");
-        shellTypePrompt();
     }
 
     public static void wheelTypePrompt(){
@@ -70,12 +69,12 @@ public class InventoryUi {
         System.out.println("The available number of "+ item + " is : " + count);
     }
 
-    public static void successfulMessagePrompt(){
-        System.out.println("Task Completed Successfully!");
+    public static void subItemCountPrompt(String item, int count){
+        System.out.println("\t"+ item + " : "+count);
     }
 
-    public static void carTypePrompt(){
-        System.out.println("Select the type of car you want :\nWe have two :\n1. Off-Road 2. Sports");
+    public static void successfulMessagePrompt(){
+        System.out.println("Task Completed Successfully!");
     }
 
     public static void shellChoosingPrompt(String carType){
