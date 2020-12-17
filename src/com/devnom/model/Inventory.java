@@ -125,6 +125,27 @@ public class Inventory{
     public int getBodyShellsCount() {
         return BodyShellTypes.totalCount();
     }
+    public int getBodyShellsCount(String bodyShellType){
+        switch (bodyShellType){
+            case "sport":
+                return BodyShellTypes.Sport.getCount();
+            case "suv":
+                return BodyShellTypes.SUV.getCount();
+            case "atv":
+                return BodyShellTypes.ATV.getCount();
+            case "military":
+                return BodyShellTypes.Military.getCount();
+            case "trucks":
+                return BodyShellTypes.Trucks.getCount();
+            case "classic":
+                return BodyShellTypes.Classic.getCount();
+            case "dune buggy":
+                return BodyShellTypes.DuneBuggy.getCount();
+            case "crawlers":
+                return BodyShellTypes.Crawlers.getCount();
+        }
+        return -1;
+    }
 
     public int getShocksCount() {
         return shocks.size();
@@ -146,13 +167,14 @@ public class Inventory{
         return frames.size();
     }
 
-    public int getWideWheelsCount(){
-        return wideWheels.size();
+
+    public int getWheelsCount(boolean isWide){
+        if (isWide){
+            return wideWheels.size();
+        }
+        else return normalWheels.size();
     }
 
-    public int getNormalWheelsCount(){
-        return normalWheels.size();
-    }
 
     public boolean removeBatteries(int count){
         if (getBatteryCount()>=count){
@@ -248,24 +270,22 @@ public class Inventory{
     }
 
     public boolean removeWheels(int count, boolean isWide){
+        Wheel wheel;
         if (getWheelsCount()>=count){
-            if (isWide && getWideWheelsCount()>=count){
+            if (getWheelsCount(isWide)>=count){
                 for (int i=0;i<count;i++){
-                    Wheel wheel = wideWheels.get(i);
+                    if (isWide){
+                        wheel = wideWheels.get(i);
+                        wideWheels.remove(wheel);
+                    }else {
+                        wheel = normalWheels.get(i);
+                        normalWheels.remove(wheel);
+                    }
                     wheels.remove(wheel);
-                    wideWheels.remove(i);
-                }
-                return true;
-            }else if(getNormalWheelsCount()>=count){
-                for (int i=0;i<count;i++){
-                    Wheel wheel = wideWheels.get(i);
-                    wheels.remove(wheel);
-                    normalWheels.remove(i);
                 }
                 return true;
             }
             return false;
-
         }
         return false;
     }
