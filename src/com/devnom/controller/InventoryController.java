@@ -14,6 +14,10 @@ public class InventoryController {
     // bootUp
     // this method should prompt the first menu and keep the program running as long as we don't press qu
 
+    public static void main(String[] args) {
+        bootUp();
+    }
+
     private static final Inventory currentInventory = new Inventory();
 
     private static ArrayList<ModelNumber> modelNumbers = new ArrayList<>(
