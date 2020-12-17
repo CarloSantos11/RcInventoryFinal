@@ -1,6 +1,7 @@
 package com.devnom.view;
 
 
+import com.devnom.model.ModelNumber;
 import com.devnom.model.Shell;
 
 import java.util.ArrayList;
@@ -47,10 +48,6 @@ public class InventoryUi {
         System.out.println("Enter the number you want to "+ whatToDo+ " :");
     }
 
-    public static void carTypePrompt(){
-        System.out.println("Select the type of car you want :\nWe have two :\n1. Off-Road 2. Sports");
-    }
-
     public static void shellTypePrompt(){
         System.out.println("Enter the type of the Shell.\n"
                 +"Available Shells :");
@@ -80,32 +77,38 @@ public class InventoryUi {
         System.out.println(whatWasDone + " successfully done!!!");
     }
 
-    public static void shellChoosingPrompt(String carType){
-        if(carType.equalsIgnoreCase("Off-Road")){
-            System.out.println("Choose a Shell Type :");
-            System.out.println("Available Types : \n"+
-                    "1. "+shellTypes.get(0)+" \n"+
-                    "2. "+shellTypes.get(1)+" \n"+
-                    "3. "+shellTypes.get(2)+" \n" +
-                    "4. "+shellTypes.get(6)+" (Price : 200)\n" +
-                    "5. "+shellTypes.get(7)+" (Price : 200)");
-        }else {
-            System.out.println("Choose a Shell Type :");
-            System.out.println("Available Types : \n"+
-                    "1. "+shellTypes.get(3)+" \n"+
-                    "2. "+shellTypes.get(4)+" \n"+
-                    "3. "+shellTypes.get(5)+" \n"+
-                    "4. "+shellTypes.get(6)+"  (Price : 200)\n" +
-                    "5. "+ shellTypes.get(7)+" (Price : 200)");
-        }
-    }
-
     public static void notEnoughCountPrompt(String item, int availableCount){
         System.err.println("Not Enough " + item +"\nAvailable "+item +" : "+ availableCount);
     }
 
     public static void successfulAdditionPrompt(int count, String item){
         System.out.println("Successfully added " + count + " "+ item);
+    }
+
+    public static void carTypesPrompt(){
+        System.out.print("1. ");
+        modelNumberPrompt(ModelNumber.SPORTS_MODEL);
+        System.out.print("2. ");
+        modelNumberPrompt(ModelNumber.SUV_MODEL);
+        System.out.print("3. ");
+        modelNumberPrompt(ModelNumber.CLASSIC_MODEL);
+        System.out.print("4. ");
+        modelNumberPrompt(ModelNumber.ATV_MODEL);
+        System.out.print("5. ");
+        modelNumberPrompt(ModelNumber.DUNE_BUGGY_MODEL);
+        System.out.print("6. ");
+        modelNumberPrompt(ModelNumber.CRAWLER_MODEL);
+    }
+
+    public static void modelNumberPrompt(ModelNumber modelNumber){
+        System.out.println(modelNumber+" : "+modelNumber.getUPCPrefix() +" "+
+                modelNumber.getModelNumber() +" "+ modelNumber.getStartingCount());
+    }
+
+    public static void extraShellPrompt(){
+        System.out.println("Do you want to change the Shell type?\n" +
+                "The following options are available :\n" +
+                "1. Military\t2. Truck");
     }
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals

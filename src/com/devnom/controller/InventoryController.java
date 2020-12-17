@@ -46,7 +46,7 @@ public class InventoryController {
 
     }
 
-    public static String inventoryActions(String choice) {
+    private static String inventoryActions(String choice) {
         switch (choice){
             case "1":
                 choice = "1";
@@ -61,7 +61,7 @@ public class InventoryController {
                 choice = "3";
                 break;
             case "4":
-//                packageBox();
+                buildCar();
                 choice = "4";
                 break;
             case "Q":
@@ -77,7 +77,7 @@ public class InventoryController {
     // being performed on our POJOs
     // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
 
-    public static void addToInventory() {
+    private static void addToInventory() {
 
         InventoryUi.availableItemsPrompt("Add");
         int choice = getUserInputInt();
@@ -159,7 +159,7 @@ public class InventoryController {
 
     }
 
-    public static void checkInventory() {//this checks how many items we have
+    private static void checkInventory() {//this checks how many items we have
         InventoryUi.availableItemsPrompt("Check Count");
         int choice = getUserInputInt();
 
@@ -203,50 +203,7 @@ public class InventoryController {
         }
     }
 
-    public boolean packageBox(String bodyShellType, boolean isWide) {
-
-        ArrayList<Boolean> allTrue = new ArrayList<>();
-
-        //Removing Body Shell
-        allTrue.add(validateCount(currentInventory.getBodyShellsCount(),"Body Shell"));
-        currentInventory.removeBodyShell(1,bodyShellType);
-
-        //Removing Wheel
-        allTrue.add(validateCount(currentInventory.getWheelsCount(isWide),"Wheels - "+(isWide?" Wide":"Normal")));
-        currentInventory.removeWheels(1,isWide);
-
-        //Removing Battery
-        allTrue.add(validateCount(currentInventory.getBatteryCount(),"Count"));
-        currentInventory.removeBatteries(1);
-
-        //Removing Charger
-        allTrue.add(validateCount(currentInventory.getChargersCount(),"Count"));
-        currentInventory.removeChargers(1);
-
-        //Removing Frame
-        allTrue.add(validateCount(currentInventory.getFrameCount(),"Count"));
-        currentInventory.removeFrame(1);
-
-        //Removing Motor
-        allTrue.add(validateCount(currentInventory.getMotorsCount(),"Count"));
-        currentInventory.removeMotors(1);
-
-        //Removing Remote Controller
-        allTrue.add(validateCount(currentInventory.getRemoteControllerCount(),"Count"));
-        currentInventory.removeRemoteControllers(1);
-
-        //Removing Shocks
-        allTrue.add(validateCount(currentInventory.getShocksCount(),"Count"));
-        currentInventory.removeShocks(1);
-
-        if (allTrue.contains(false)){
-            return false;
-        }
-        InventoryUi.successfulMessagePrompt("Car Creation");
-        return true;
-    }
-
-    public static void removeItems(){
+    private static void removeItems(){
         InventoryUi.availableItemsPrompt("Remove");
         int choice = getUserInputInt();
 
@@ -316,6 +273,101 @@ public class InventoryController {
         }
         InventoryUi.successfulMessagePrompt("Removal of selected items");
 
+    }
+
+    private static void buildCar(){
+        InventoryUi.carTypesPrompt();
+        InventoryUi.countPrompt("Build");
+
+        int choice = getUserInputInt();
+        validateInput(6,choice,"Choice");
+
+        String bodyShellType;
+        bodyShellType = chooseExtraShell();
+        boolean isWide=false;
+
+        boolean isStreet=false;
+        if  (choice < 4){
+            isStreet = true;
+        }
+        if (!isStreet){
+            isWide = chooseWheels();
+        }
+        packageBox(bodyShellType,isWide);
+
+    }
+
+    private static boolean packageBox(String bodyShellType, boolean isWide) {
+
+        ArrayList<Boolean> allTrue = new ArrayList<>();
+
+        //Removing Body Shell
+        allTrue.add(validateCount(currentInventory.getBodyShellsCount(),"Body Shell"));
+        currentInventory.removeBodyShell(1,bodyShellType);
+
+        //Removing Wheel
+        allTrue.add(validateCount(currentInventory.getWheelsCount(isWide),"Wheels - "+(isWide?" Wide":"Normal")));
+        currentInventory.removeWheels(1,isWide);
+
+        //Removing Battery
+        allTrue.add(validateCount(currentInventory.getBatteryCount(),"Count"));
+        currentInventory.removeBatteries(1);
+
+        //Removing Charger
+        allTrue.add(validateCount(currentInventory.getChargersCount(),"Count"));
+        currentInventory.removeChargers(1);
+
+        //Removing Frame
+        allTrue.add(validateCount(currentInventory.getFrameCount(),"Count"));
+        currentInventory.removeFrame(1);
+
+        //Removing Motor
+        allTrue.add(validateCount(currentInventory.getMotorsCount(),"Count"));
+        currentInventory.removeMotors(1);
+
+        //Removing Remote Controller
+        allTrue.add(validateCount(currentInventory.getRemoteControllerCount(),"Count"));
+        currentInventory.removeRemoteControllers(1);
+
+        //Removing Shocks
+        allTrue.add(validateCount(currentInventory.getShocksCount(),"Count"));
+        currentInventory.removeShocks(1);
+
+        if (allTrue.contains(false)){
+            return false;
+        }
+        InventoryUi.successfulMessagePrompt("Car Creation");
+        return true;
+    }
+
+    private static boolean chooseWheels(){
+        InventoryUi.wheelTypePrompt();
+        String wheelType = getUserInputString();
+        boolean isWide=false;
+
+        boolean validWheelType = false;
+        while(!validWheelType) {
+            if (wheelType.equals("y")||wheelType.equals("n")){
+                validWheelType = true;
+                isWide = wheelType.equals("y");
+            }else {
+                InventoryUi.invalidInputPrompt("Wheel Type");
+                wheelType = getUserInputString().toLowerCase();
+            }
+        }
+        return isWide;
+
+    }
+
+    private static String chooseExtraShell(){
+        InventoryUi.extraShellPrompt();
+        int choice = getUserInputInt();
+        validateInput(2,choice,"Choice");
+
+        if (choice == 1){
+            return "military";
+        }
+        return "truck";
     }
 
     private static int validateInput(int upperLimit, int input, String whatIsWrong){

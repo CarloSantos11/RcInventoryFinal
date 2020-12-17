@@ -9,14 +9,13 @@ public enum ModelNumber {
     DUNE_BUGGY_MODEL("ORDB3400","885532",7446),
     CRAWLER_MODEL("ORCR4600","756643",3398);
 
-    String modelNumber;
-    String UPCPrefix;
-    int StartingCount;
+    private final String modelNumber;
+    private final String UPCPrefix;
+    private int startingCount;
 
     ModelNumber(String modelNumber, String UPCPrefix, int startingCount) {
-        this.modelNumber = modelNumber;
+        this.modelNumber=modelNumber;
         this.UPCPrefix = UPCPrefix;
-        StartingCount = startingCount;
     }
 
     public String getModelNumber() {
@@ -28,10 +27,11 @@ public enum ModelNumber {
     }
 
     public int getStartingCount() {
-        return StartingCount;
+        return startingCount;
     }
 
     public void modelAdded(){
-        StartingCount++;
+        this.startingCount++;
     }
+
 }
