@@ -54,7 +54,9 @@ public class InventoryUi {
     public static void shellTypePrompt(){
         System.out.println("Enter the type of the Shell.\n"
                 +"Available Shells :");
-        System.out.println(Shell.shellTypes1.toString());
+        for (int i=0;i<shellTypes.size();i++){
+            System.out.println("\t"+(i+1)+". "+ shellTypes.get(i));
+        }
     }
 
     public static void wheelTypePrompt(){
@@ -98,10 +100,13 @@ public class InventoryUi {
         }
     }
 
-    public static void notEnoughCountPrompt(String item){
-        System.err.println("Not Enough " + item);
+    public static void notEnoughCountPrompt(String item, int availableCount){
+        System.err.println("Not Enough " + item +"\nAvailable "+item +" : "+ availableCount);
     }
 
+    public static void successfulAdditionPrompt(int count, String item){
+        System.out.println("Successfully added " + count + " "+ item);
+    }
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals
 

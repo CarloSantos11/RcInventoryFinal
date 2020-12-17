@@ -99,31 +99,28 @@ public class InventoryController {
         switch (choice) {
             case 1:
                 InventoryUi.shellTypePrompt();
-                String bodyShellType = getUserInputString();
-                bodyShellType = bodyShellType.toLowerCase();
-                ArrayList<String> shell = Shell.shellTypes;
-                if (shell.contains(bodyShellType)) {
-                    if (shell.contains("military") || shell.contains("trucks")) {
-                        currentInventory.addBodyShell(count, bodyShellType, 200);
-                    } else {
-                        currentInventory.addBodyShell(count, bodyShellType);
-                    }
-                } else {
-                    while (!shell.contains(bodyShellType)) {
-                        InventoryUi.invalidInputPrompt("Shell type");
-                        InventoryUi.shellTypePrompt();
-                        bodyShellType = getUserInputString().toLowerCase();
+                int bodyShellChoice = getUserInputInt();
+                String bodyShellType="";
+                bodyShellChoice = validateInput(Shell.shellTypes.size(),bodyShellChoice,"Shell Type");
+                for (int i = 1;i <= Shell.shellTypes.size();i++){
+                    if (i == bodyShellChoice){
+                        bodyShellType = Shell.shellTypes.get(i-1);
                     }
                 }
+                currentInventory.addBodyShell(count,bodyShellType);
+                InventoryUi.successfulAdditionPrompt(count,"Body Shell - "+ bodyShellType);
                 break;
             case 2:
                 currentInventory.addChargers(count);
+                InventoryUi.successfulAdditionPrompt(count,"Chargers");
                 break;
             case 3:
                 currentInventory.addMotors(count);
+                InventoryUi.successfulAdditionPrompt(count,"Motor");
                 break;
             case 4:
                 currentInventory.addShocks(count);
+                InventoryUi.successfulAdditionPrompt(count,"Shocks");
                 break;
             case 5:
                 InventoryUi.wheelTypePrompt();
@@ -143,18 +140,21 @@ public class InventoryController {
                     }
                 }
                 currentInventory.addWheels(count,isWide, price);
+                InventoryUi.successfulAdditionPrompt(count,"Wheels - "+ (isWide ? "Wide":"Normal"));
                 break;
             case 6:
                 currentInventory.addRemoteControllers(count);
+                InventoryUi.successfulAdditionPrompt(count,"Remote Controller");
                 break;
             case 7:
                 currentInventory.addFrame(count);
+                InventoryUi.successfulAdditionPrompt(count,"Frame");
                 break;
             case 8:
                 currentInventory.addBatteries(count);
+                InventoryUi.successfulAdditionPrompt(count,"Batteries");
                 break;
         }
-        InventoryUi.successfulMessagePrompt("Addition of selected items");
 
 
     }
@@ -163,7 +163,7 @@ public class InventoryController {
         InventoryUi.availableItemsPrompt("Check Count");
         int choice = getUserInputInt();
 
-        choice = validateInput(8,choice,"Input");
+        choice = validateInput(8,choice,"Choice");
 
         switch (choice) {
             case 1:
@@ -201,8 +201,6 @@ public class InventoryController {
                 InventoryUi.getCountPrompt("Battery",currentInventory.getBatteryCount());
                 break;
         }
-
-
     }
 
     public static void packageBox() {
@@ -288,7 +286,7 @@ public class InventoryController {
         InventoryUi.availableItemsPrompt("Remove");
         int choice = getUserInputInt();
 
-        choice = validateInput(8,choice,"Input");
+        choice = validateInput(8,choice,"Choice");
 
         InventoryUi.countPrompt("Remove");
         int count = getUserInputInt();
@@ -297,30 +295,27 @@ public class InventoryController {
         switch (choice) {
             case 1:
                 InventoryUi.shellTypePrompt();
-                String bodyShellType = getUserInputString();
-                bodyShellType = bodyShellType.toLowerCase();
-                ArrayList<String> shell = Shell.shellTypes;
-                if (shell.contains(bodyShellType)) {
-                    count = validateInput(currentInventory.getBodyShellsCount(bodyShellType),count,"Count");
-                    currentInventory.removeBodyShell(count,bodyShellType);
-                } else {
-                    while (!shell.contains(bodyShellType)) {
-                        InventoryUi.invalidInputPrompt("Shell type");
-                        InventoryUi.shellTypePrompt();
-                        bodyShellType = getUserInputString().toLowerCase();
+                int bodyShellChoice = getUserInputInt();
+                String bodyShellType="";
+                bodyShellChoice = validateInput(Shell.shellTypes.size(),bodyShellChoice,"Shell Type");
+                for (int i = 1;i <= Shell.shellTypes.size();i++){
+                    if (i == bodyShellChoice){
+                        bodyShellType = Shell.shellTypes.get(i-1);
                     }
                 }
+                count = validateCount(currentInventory.getBodyShellsCount(bodyShellType),count,"Body Shell - " +bodyShellType);
+                currentInventory.removeBodyShell(count,bodyShellType);
                 break;
             case 2:
-                count = validateInput(currentInventory.getChargersCount(),count,"Chargers Count");
+                count = validateCount(currentInventory.getChargersCount(),count,"Chargers Count");
                 currentInventory.removeChargers(count);
                 break;
             case 3:
-                count = validateInput(currentInventory.getMotorsCount(),count,"Count Count");
+                count = validateCount(currentInventory.getMotorsCount(),count,"Count Count");
                 currentInventory.removeMotors(count);
                 break;
             case 4:
-                count = validateInput(currentInventory.getShocksCount(),count,"Shocks Count");
+                count = validateCount(currentInventory.getShocksCount(),count,"Shocks Count");
                 currentInventory.removeShocks(count);
                 break;
             case 5:
@@ -339,19 +334,19 @@ public class InventoryController {
                         wheelType = getUserInputString().toLowerCase();
                     }
                 }
-                count = validateInput(currentInventory.getWheelsCount(isWide),count,"Count");
+                count = validateCount(currentInventory.getWheelsCount(isWide),count,"Count");
                 currentInventory.removeWheels(count,isWide);
                 break;
             case 6:
-                count = validateInput(currentInventory.getRemoteControllerCount(),count,"Count");
+                count = validateCount(currentInventory.getRemoteControllerCount(),count,"Count");
                 currentInventory.removeRemoteControllers(count);
                 break;
             case 7:
-                count = validateInput(currentInventory.getFrameCount(),count,"Count");
+                count = validateCount(currentInventory.getFrameCount(),count,"Count");
                 currentInventory.removeFrame(count);
                 break;
             case 8:
-                count = validateInput(currentInventory.getBatteryCount(),count,"Count");
+                count = validateCount(currentInventory.getBatteryCount(),count,"Count");
                 currentInventory.removeBatteries(count);
                 break;
         }
@@ -364,6 +359,17 @@ public class InventoryController {
         while (!validInput) {
             if (input < 1 || input > upperLimit) {
                 InventoryUi.invalidInputPrompt(whatIsWrong);
+                input = getUserInputInt();
+            } else validInput = true;
+        }
+        return input;
+    }
+
+    private static int validateCount(int upperLimit, int input, String items){
+        boolean validInput = false;
+        while (!validInput) {
+            if (input < 0 || input > upperLimit) {
+                InventoryUi.notEnoughCountPrompt(items,upperLimit);
                 input = getUserInputInt();
             } else validInput = true;
         }
