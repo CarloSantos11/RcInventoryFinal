@@ -110,6 +110,10 @@ public class InventoryUi {
                 "The following options are available :\n" +
                 "1. Military\t2. Truck");
     }
+
+    public static void taskCouldNotBeCompleted(String whatWasInterrupted){
+        System.err.println("Couldn't complete "+whatWasInterrupted);
+    }
     //Even though the methods are just one line,
     //they are separated for the proper implementation of MVC principals
 

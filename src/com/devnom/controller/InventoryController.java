@@ -293,7 +293,11 @@ public class InventoryController {
         if (!isStreet){
             isWide = chooseWheels();
         }
-        packageBox(bodyShellType,isWide);
+        if(packageBox(bodyShellType,isWide)){
+            InventoryUi.successfulMessagePrompt("Built a Car");
+        }else   {
+            InventoryUi.taskCouldNotBeCompleted("Building a Car");
+        }
 
     }
 
