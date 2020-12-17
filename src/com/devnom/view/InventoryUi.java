@@ -108,7 +108,7 @@ public class InventoryUi {
     public static void extraShellPrompt(){
         System.out.println("Do you want to change the Shell type?\n" +
                 "The following options are available :\n" +
-                "1. Military\t2. Truck");
+                "1. Military\t2. Truck\t0. None");
     }
 
     public static void taskCouldNotBeCompleted(String whatWasInterrupted){

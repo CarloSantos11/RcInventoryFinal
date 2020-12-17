@@ -1,10 +1,12 @@
 package com.devnom.controller;
 
 import com.devnom.model.Inventory;
+import com.devnom.model.ModelNumber;
 import com.devnom.model.Shell;
 import com.devnom.view.InventoryUi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,6 +15,10 @@ public class InventoryController {
     // this method should prompt the first menu and keep the program running as long as we don't press qu
 
     private static final Inventory currentInventory = new Inventory();
+
+    private static ArrayList<ModelNumber> modelNumbers = new ArrayList<>(
+            Arrays.asList(ModelNumber.SPORTS_MODEL,ModelNumber.SUV_MODEL,ModelNumber.CLASSIC_MODEL,
+                    ModelNumber.ATV_MODEL,ModelNumber.DUNE_BUGGY_MODEL,ModelNumber.CRAWLER_MODEL));
 
     public static void bootUp() {
         String userInput = "";
@@ -284,7 +290,12 @@ public class InventoryController {
 
         String bodyShellType;
         bodyShellType = chooseExtraShell();
+        if (bodyShellType == null){
+            bodyShellType = Shell.shellTypes.get(choice);
+        }
         boolean isWide=false;
+
+
 
         boolean isStreet=false;
         if  (choice < 4){
@@ -294,7 +305,7 @@ public class InventoryController {
             isWide = chooseWheels();
         }
         if(packageBox(bodyShellType,isWide)){
-            InventoryUi.successfulMessagePrompt("Built a Car");
+            modelNumbers.get(choice).modelAdded();
         }else   {
             InventoryUi.taskCouldNotBeCompleted("Building a Car");
         }
@@ -306,7 +317,7 @@ public class InventoryController {
         ArrayList<Boolean> allTrue = new ArrayList<>();
 
         //Removing Body Shell
-        allTrue.add(validateCount(currentInventory.getBodyShellsCount(),"Body Shell"));
+        allTrue.add(validateCount(currentInventory.getBodyShellsCount(bodyShellType),"Body Shell"));
         currentInventory.removeBodyShell(1,bodyShellType);
 
         //Removing Wheel
@@ -314,32 +325,33 @@ public class InventoryController {
         currentInventory.removeWheels(1,isWide);
 
         //Removing Battery
-        allTrue.add(validateCount(currentInventory.getBatteryCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getBatteryCount(),"Batteries"));
         currentInventory.removeBatteries(1);
 
         //Removing Charger
-        allTrue.add(validateCount(currentInventory.getChargersCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getChargersCount(),"Chargers"));
         currentInventory.removeChargers(1);
 
         //Removing Frame
-        allTrue.add(validateCount(currentInventory.getFrameCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getFrameCount(),"Frames"));
         currentInventory.removeFrame(1);
 
         //Removing Motor
-        allTrue.add(validateCount(currentInventory.getMotorsCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getMotorsCount(),"Motors"));
         currentInventory.removeMotors(1);
 
         //Removing Remote Controller
-        allTrue.add(validateCount(currentInventory.getRemoteControllerCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getRemoteControllerCount(),"Remote Controller"));
         currentInventory.removeRemoteControllers(1);
 
         //Removing Shocks
-        allTrue.add(validateCount(currentInventory.getShocksCount(),"Count"));
+        allTrue.add(validateCount(currentInventory.getShocksCount(),"Shocks"));
         currentInventory.removeShocks(1);
 
         if (allTrue.contains(false)){
             return false;
         }
+
         InventoryUi.successfulMessagePrompt("Car Creation");
         return true;
     }
@@ -366,18 +378,31 @@ public class InventoryController {
     private static String chooseExtraShell(){
         InventoryUi.extraShellPrompt();
         int choice = getUserInputInt();
-        validateInput(2,choice,"Choice");
+        validateInput(0,2,choice,"Choice");
 
         if (choice == 1){
             return "military";
+        }else if (choice ==2){
+            return "truck";
         }
-        return "truck";
+        return null;
     }
 
     private static int validateInput(int upperLimit, int input, String whatIsWrong){
         boolean validInput = false;
         while (!validInput) {
             if (input < 1 || input > upperLimit) {
+                InventoryUi.invalidInputPrompt(whatIsWrong);
+                input = getUserInputInt();
+            } else validInput = true;
+        }
+        return input;
+    }
+
+    private static int validateInput(int lowerLimit,int upperLimit, int input, String whatIsWrong){
+        boolean validInput = false;
+        while (!validInput) {
+            if (input < lowerLimit || input > upperLimit) {
                 InventoryUi.invalidInputPrompt(whatIsWrong);
                 input = getUserInputInt();
             } else validInput = true;
