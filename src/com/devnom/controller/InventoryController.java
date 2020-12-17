@@ -134,7 +134,7 @@ public class InventoryController {
                 currentInventory.addBatteries(count);
                 break;
         }
-        InventoryUi.successfulMessagePrompt();
+        InventoryUi.successfulMessagePrompt("Addition of selected items");
 
 
     }
@@ -259,7 +259,7 @@ public class InventoryController {
         validateInput(1,currentInventory.getShocksCount(),1,"Count");
         currentInventory.removeShocks(1);
 
-        InventoryUi.successfulMessagePrompt();
+        InventoryUi.successfulMessagePrompt("Selection of customized car");
 
 
     }
@@ -292,15 +292,15 @@ public class InventoryController {
                 }
                 break;
             case 2:
-                count = validateInput(1,currentInventory.getChargersCount(),count,"Chargers");
+                count = validateInput(1,currentInventory.getChargersCount(),count,"Chargers Count");
                 currentInventory.removeChargers(count);
                 break;
             case 3:
-                count = validateInput(1, currentInventory.getMotorsCount(),count,"Count");
+                count = validateInput(1, currentInventory.getMotorsCount(),count,"Count Count");
                 currentInventory.removeMotors(count);
                 break;
             case 4:
-                count = validateInput(1, currentInventory.getShocksCount(),count,"Shocks");
+                count = validateInput(1, currentInventory.getShocksCount(),count,"Shocks Count");
                 currentInventory.removeShocks(count);
                 break;
             case 5:
@@ -335,7 +335,7 @@ public class InventoryController {
                 currentInventory.removeBatteries(count);
                 break;
         }
-        InventoryUi.successfulMessagePrompt();
+        InventoryUi.successfulMessagePrompt("Removal of selected items");
 
     }
 

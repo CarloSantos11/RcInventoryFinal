@@ -74,8 +74,8 @@ public class InventoryUi {
         System.out.println("\t"+ item + " : "+count);
     }
 
-    public static void successfulMessagePrompt(){
-        System.out.println("Task Completed Successfully!");
+    public static void successfulMessagePrompt(String whatWasDone){
+        System.out.println(whatWasDone + " successfully done!!!");
     }
 
     public static void shellChoosingPrompt(String carType){
