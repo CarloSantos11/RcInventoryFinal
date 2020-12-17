@@ -291,7 +291,7 @@ public class InventoryController {
         String bodyShellType;
         bodyShellType = chooseExtraShell();
         if (bodyShellType == null){
-            bodyShellType = Shell.shellTypes.get(choice);
+            bodyShellType = Shell.shellTypes.get(choice-1);
         }
         boolean isWide=false;
 
@@ -305,7 +305,7 @@ public class InventoryController {
             isWide = chooseWheels();
         }
         if(packageBox(bodyShellType,isWide)){
-            modelNumbers.get(choice).modelAdded();
+            modelNumbers.get(choice-1).modelAdded();
         }else   {
             InventoryUi.taskCouldNotBeCompleted("Building a Car");
         }
@@ -317,7 +317,7 @@ public class InventoryController {
         ArrayList<Boolean> allTrue = new ArrayList<>();
 
         //Removing Body Shell
-        allTrue.add(validateCount(currentInventory.getBodyShellsCount(bodyShellType),"Body Shell"));
+        allTrue.add(validateCount(currentInventory.getBodyShellsCount(bodyShellType),"Body Shell - "+bodyShellType));
         currentInventory.removeBodyShell(1,bodyShellType);
 
         //Removing Wheel
