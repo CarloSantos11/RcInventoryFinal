@@ -20,7 +20,7 @@ public class InventoryUi {
                         "\t1. Add to Inventory\n" +
                         "\t2. Check Inventory\n" +
                         "\t3. Remove Items\n" +
-                        "\t4. Package\n"+
+                        "\t4. Build a Car\n"+
                         "\t\tQ to exit...\n"
         );
     }

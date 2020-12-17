@@ -61,7 +61,7 @@ public class InventoryController {
                 choice = "3";
                 break;
             case "4":
-                packageBox();
+//                packageBox();
                 choice = "4";
                 break;
             case "Q":
@@ -203,83 +203,47 @@ public class InventoryController {
         }
     }
 
-    public static void packageBox() {
+    public boolean packageBox(String bodyShellType, boolean isWide) {
 
-        //Choosing the Car Type
-        InventoryUi.carTypePrompt();
-        boolean isOffRoad;
-        int choice = getUserInputInt();
-        choice = validateInput(2,choice,"Input");
-        String carType;
-        if (choice==1) {
-            carType = "Off-Road";
-            isOffRoad = true;
-        }else {
-            carType = "Street";
-            isOffRoad =false;
-        }
+        ArrayList<Boolean> allTrue = new ArrayList<>();
 
-
-        //Choosing a Body Shell
-        String bodyShellType;
-        InventoryUi.shellChoosingPrompt(carType);
-        choice = getUserInputInt();
-        choice = validateInput(5,choice,"Input");
-        if(isOffRoad){
-            if (choice<4) {
-                bodyShellType = InventoryUi.shellTypes.get(choice - 1);
-            }else  {
-                bodyShellType = InventoryUi.shellTypes.get(choice +2);
-            }
-        }
-        else {
-            bodyShellType = InventoryUi.shellTypes.get(choice+2);
-        }
-        validateInput(currentInventory.getBodyShellsCount(),1,"Body Shell");
+        //Removing Body Shell
+        allTrue.add(validateCount(currentInventory.getBodyShellsCount(),"Body Shell"));
         currentInventory.removeBodyShell(1,bodyShellType);
 
-        //Choosing a Wheel Type
-        if (isOffRoad){
-            InventoryUi.wheelTypePrompt();
+        //Removing Wheel
+        allTrue.add(validateCount(currentInventory.getWheelsCount(isWide),"Wheels - "+(isWide?" Wide":"Normal")));
+        currentInventory.removeWheels(1,isWide);
 
-            boolean isWide;
-            String wheelType = getUserInputString().toLowerCase();
-
-            boolean validWheelType = false;
-            while(!validWheelType) {
-                if (wheelType.equals("y")||wheelType.equals("n")){
-                    validWheelType = true;
-                    isWide = wheelType.equals("y");
-                    validateInput(currentInventory.getWheelsCount(isWide),1,"Count");
-                    currentInventory.removeWheels(1,isWide);
-                }else {
-                    InventoryUi.invalidInputPrompt("Wheel Type");
-                    wheelType = getUserInputString().toLowerCase();
-                }
-            }
-        } else {
-            validateInput(currentInventory.getWheelsCount(false),1,"Count");
-            currentInventory.removeWheels(1,false);
-        }
-
-        //removing all other items
-
-        validateInput(currentInventory.getBatteryCount(),1,"Count");
+        //Removing Battery
+        allTrue.add(validateCount(currentInventory.getBatteryCount(),"Count"));
         currentInventory.removeBatteries(1);
-        validateInput(currentInventory.getChargersCount(),1,"Count");
+
+        //Removing Charger
+        allTrue.add(validateCount(currentInventory.getChargersCount(),"Count"));
         currentInventory.removeChargers(1);
-        validateInput(currentInventory.getFrameCount(),1,"Count");
+
+        //Removing Frame
+        allTrue.add(validateCount(currentInventory.getFrameCount(),"Count"));
         currentInventory.removeFrame(1);
-        validateInput(currentInventory.getMotorsCount(),1,"Count");
+
+        //Removing Motor
+        allTrue.add(validateCount(currentInventory.getMotorsCount(),"Count"));
         currentInventory.removeMotors(1);
-        validateInput(currentInventory.getRemoteControllerCount(),1,"Count");
+
+        //Removing Remote Controller
+        allTrue.add(validateCount(currentInventory.getRemoteControllerCount(),"Count"));
         currentInventory.removeRemoteControllers(1);
-        validateInput(currentInventory.getShocksCount(),1,"Count");
+
+        //Removing Shocks
+        allTrue.add(validateCount(currentInventory.getShocksCount(),"Count"));
         currentInventory.removeShocks(1);
 
-        InventoryUi.successfulMessagePrompt("Selection of customized car");
-
-
+        if (allTrue.contains(false)){
+            return false;
+        }
+        InventoryUi.successfulMessagePrompt("Car Creation");
+        return true;
     }
 
     public static void removeItems(){
@@ -374,5 +338,13 @@ public class InventoryController {
             } else validInput = true;
         }
         return input;
+    }
+    
+    private static boolean validateCount(int upperLimit,String items){
+        if (upperLimit<1) {
+            InventoryUi.notEnoughCountPrompt(items,upperLimit);
+            return false;
+        }
+        return true;
     }
 }
