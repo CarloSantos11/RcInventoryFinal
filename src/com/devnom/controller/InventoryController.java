@@ -5,6 +5,7 @@ import com.devnom.model.Shell;
 import com.devnom.view.InventoryUi;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InventoryController {
@@ -32,16 +33,17 @@ public class InventoryController {
         Scanner userInput = new Scanner(System.in);
         boolean valid= false;
         int input = -1;
-        while (!valid) {
+        do {
             try {
                 input = userInput.nextInt();
                 valid = true;
-            } catch (Exception e) {
-                InventoryUi.invalidInputPrompt("Input");
-                input = userInput.nextInt();
+            } catch (InputMismatchException e) {
+                userInput.next();
+                InventoryUi.invalidInputPrompt("Choice");
             }
-        }
+        }while (!valid);
         return input;
+
     }
 
     public static String inventoryActions(String choice) {
@@ -62,8 +64,11 @@ public class InventoryController {
                 packageBox();
                 choice = "4";
                 break;
+            case "Q":
+                choice="Q";
+                break;
             default:
-                choice = "Q";
+                InventoryUi.invalidInputPrompt("Choice");
         }
         return choice;
     }
@@ -77,7 +82,7 @@ public class InventoryController {
         InventoryUi.availableItemsPrompt("Add");
         int choice = getUserInputInt();
 
-        choice = validateInput(1,8,choice,"Input");
+        choice = validateInput(8,choice,"Input");
 
         InventoryUi.countPrompt("Add");
         int count = getUserInputInt();
@@ -158,7 +163,7 @@ public class InventoryController {
         InventoryUi.availableItemsPrompt("Check Count");
         int choice = getUserInputInt();
 
-        choice = validateInput(1,8,choice,"Input");
+        choice = validateInput(8,choice,"Input");
 
         switch (choice) {
             case 1:
@@ -206,7 +211,7 @@ public class InventoryController {
         InventoryUi.carTypePrompt();
         boolean isOffRoad;
         int choice = getUserInputInt();
-        choice = validateInput(1,2,choice,"Input");
+        choice = validateInput(2,choice,"Input");
         String carType;
         if (choice==1) {
             carType = "Off-Road";
@@ -221,7 +226,7 @@ public class InventoryController {
         String bodyShellType;
         InventoryUi.shellChoosingPrompt(carType);
         choice = getUserInputInt();
-        choice = validateInput(1,5,choice,"Input");
+        choice = validateInput(5,choice,"Input");
         if(isOffRoad){
             if (choice<4) {
                 bodyShellType = InventoryUi.shellTypes.get(choice - 1);
@@ -232,7 +237,7 @@ public class InventoryController {
         else {
             bodyShellType = InventoryUi.shellTypes.get(choice+2);
         }
-        validateInput(1,currentInventory.getBodyShellsCount(),1,"Body Shell");
+        validateInput(currentInventory.getBodyShellsCount(),1,"Body Shell");
         currentInventory.removeBodyShell(1,bodyShellType);
 
         //Choosing a Wheel Type
@@ -247,7 +252,7 @@ public class InventoryController {
                 if (wheelType.equals("y")||wheelType.equals("n")){
                     validWheelType = true;
                     isWide = wheelType.equals("y");
-                    validateInput(1,currentInventory.getWheelsCount(isWide),1,"Count");
+                    validateInput(currentInventory.getWheelsCount(isWide),1,"Count");
                     currentInventory.removeWheels(1,isWide);
                 }else {
                     InventoryUi.invalidInputPrompt("Wheel Type");
@@ -255,23 +260,23 @@ public class InventoryController {
                 }
             }
         } else {
-            validateInput(1,currentInventory.getWheelsCount(false),1,"Count");
+            validateInput(currentInventory.getWheelsCount(false),1,"Count");
             currentInventory.removeWheels(1,false);
         }
 
         //removing all other items
 
-        validateInput(1,currentInventory.getBatteryCount(),1,"Count");
+        validateInput(currentInventory.getBatteryCount(),1,"Count");
         currentInventory.removeBatteries(1);
-        validateInput(1,currentInventory.getChargersCount(),1,"Count");
+        validateInput(currentInventory.getChargersCount(),1,"Count");
         currentInventory.removeChargers(1);
-        validateInput(1,currentInventory.getFrameCount(),1,"Count");
+        validateInput(currentInventory.getFrameCount(),1,"Count");
         currentInventory.removeFrame(1);
-        validateInput(1,currentInventory.getMotorsCount(),1,"Count");
+        validateInput(currentInventory.getMotorsCount(),1,"Count");
         currentInventory.removeMotors(1);
-        validateInput(1,currentInventory.getRemoteControllerCount(),1,"Count");
+        validateInput(currentInventory.getRemoteControllerCount(),1,"Count");
         currentInventory.removeRemoteControllers(1);
-        validateInput(1,currentInventory.getShocksCount(),1,"Count");
+        validateInput(currentInventory.getShocksCount(),1,"Count");
         currentInventory.removeShocks(1);
 
         InventoryUi.successfulMessagePrompt("Selection of customized car");
@@ -283,11 +288,11 @@ public class InventoryController {
         InventoryUi.availableItemsPrompt("Remove");
         int choice = getUserInputInt();
 
-        choice = validateInput(1,8,choice,"Input");
+        choice = validateInput(8,choice,"Input");
 
         InventoryUi.countPrompt("Remove");
         int count = getUserInputInt();
-        count = validateInput(1, Integer.MAX_VALUE,count,"Count");
+        count = validateInput(Integer.MAX_VALUE,count,"Count");
 
         switch (choice) {
             case 1:
@@ -296,7 +301,7 @@ public class InventoryController {
                 bodyShellType = bodyShellType.toLowerCase();
                 ArrayList<String> shell = Shell.shellTypes;
                 if (shell.contains(bodyShellType)) {
-                    count = validateInput(1, currentInventory.getBodyShellsCount(bodyShellType),count,"Count");
+                    count = validateInput(currentInventory.getBodyShellsCount(bodyShellType),count,"Count");
                     currentInventory.removeBodyShell(count,bodyShellType);
                 } else {
                     while (!shell.contains(bodyShellType)) {
@@ -307,15 +312,15 @@ public class InventoryController {
                 }
                 break;
             case 2:
-                count = validateInput(1,currentInventory.getChargersCount(),count,"Chargers Count");
+                count = validateInput(currentInventory.getChargersCount(),count,"Chargers Count");
                 currentInventory.removeChargers(count);
                 break;
             case 3:
-                count = validateInput(1, currentInventory.getMotorsCount(),count,"Count Count");
+                count = validateInput(currentInventory.getMotorsCount(),count,"Count Count");
                 currentInventory.removeMotors(count);
                 break;
             case 4:
-                count = validateInput(1, currentInventory.getShocksCount(),count,"Shocks Count");
+                count = validateInput(currentInventory.getShocksCount(),count,"Shocks Count");
                 currentInventory.removeShocks(count);
                 break;
             case 5:
@@ -334,19 +339,19 @@ public class InventoryController {
                         wheelType = getUserInputString().toLowerCase();
                     }
                 }
-                count = validateInput(1, currentInventory.getWheelsCount(isWide),count,"Count");
+                count = validateInput(currentInventory.getWheelsCount(isWide),count,"Count");
                 currentInventory.removeWheels(count,isWide);
                 break;
             case 6:
-                count = validateInput(1, currentInventory.getRemoteControllerCount(),count,"Count");
+                count = validateInput(currentInventory.getRemoteControllerCount(),count,"Count");
                 currentInventory.removeRemoteControllers(count);
                 break;
             case 7:
-                count = validateInput(1, currentInventory.getFrameCount(),count,"Count");
+                count = validateInput(currentInventory.getFrameCount(),count,"Count");
                 currentInventory.removeFrame(count);
                 break;
             case 8:
-                count = validateInput(1, currentInventory.getBatteryCount(),count,"Count");
+                count = validateInput(currentInventory.getBatteryCount(),count,"Count");
                 currentInventory.removeBatteries(count);
                 break;
         }
@@ -354,10 +359,10 @@ public class InventoryController {
 
     }
 
-    private static int validateInput(int lowerLimit, int upperLimit,int input,String whatIsWrong){
+    private static int validateInput(int upperLimit, int input, String whatIsWrong){
         boolean validInput = false;
         while (!validInput) {
-            if (input < lowerLimit || input > upperLimit) {
+            if (input < 1 || input > upperLimit) {
                 InventoryUi.invalidInputPrompt(whatIsWrong);
                 input = getUserInputInt();
             } else validInput = true;
