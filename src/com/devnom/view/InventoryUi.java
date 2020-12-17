@@ -1,6 +1,7 @@
 package com.devnom.view;
 
 
+import com.devnom.model.Inventory;
 import com.devnom.model.ModelNumber;
 import com.devnom.model.Shell;
 
@@ -57,7 +58,8 @@ public class InventoryUi {
     }
 
     public static void wheelTypePrompt(){
-        System.out.println("Do you want the wheels to be wide? (Y/N)");
+        System.out.println("Select the type of wheel :\n" +
+                "\t1. Wide Wheels\t2. Normal Wheels");
     }
 
     public static void invalidInputPrompt(String whatIsWrong){
@@ -109,6 +111,22 @@ public class InventoryUi {
         System.out.println("Do you want to change the Shell type?\n" +
                 "The following options are available :\n" +
                 "1. Military\t2. Truck\t0. None");
+    }
+
+    public static void checkBodyShellTypes(Inventory currentInventory){
+        InventoryUi.subItemCountPrompt("Sport", currentInventory.getBodyShellsCount("sport"));
+        InventoryUi.subItemCountPrompt("Classic", currentInventory.getBodyShellsCount("classic"));
+        InventoryUi.subItemCountPrompt("Crawlers", currentInventory.getBodyShellsCount("crawlers"));
+        InventoryUi.subItemCountPrompt("ATV", currentInventory.getBodyShellsCount("atv"));
+        InventoryUi.subItemCountPrompt("Dune Buggy", currentInventory.getBodyShellsCount("dune buggy"));
+        InventoryUi.subItemCountPrompt("SUV", currentInventory.getBodyShellsCount("suv"));
+        InventoryUi.subItemCountPrompt("Military",currentInventory.getBodyShellsCount("military"));
+        InventoryUi.subItemCountPrompt("Trucks", currentInventory.getBodyShellsCount("trucks"));
+    }
+
+    public static void checkWheelTypes(Inventory currentInventory){
+        InventoryUi.subItemCountPrompt("Wide Wheels", currentInventory.getWheelsCount(true));
+        InventoryUi.subItemCountPrompt("Normal Wheels", currentInventory.getWheelsCount(false));
     }
 
     public static void taskCouldNotBeCompleted(String whatWasInterrupted){
