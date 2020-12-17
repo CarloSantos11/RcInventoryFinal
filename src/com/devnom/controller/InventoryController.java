@@ -96,15 +96,7 @@ public class InventoryController {
 
         InventoryUi.countPrompt("Add");
         int count = getUserInputInt();
-        boolean validInput = false;//as the addItems()methods return a boolean if there's a problem adding, this checks for the invalid inputs
-
-        while (!validInput) {
-            if (count < 0) {
-                InventoryUi.invalidInputPrompt("count");
-                InventoryUi.countPrompt("Add");
-                count = getUserInputInt();
-            } else validInput = true;
-        }
+        validateInput(0,Integer.MAX_VALUE,count,"Count");
 
         switch (choice) {
             case 1:
@@ -326,7 +318,7 @@ public class InventoryController {
 
         //Removing Wheel
         allTrue.add(validateCount(currentInventory.getWheelsCount(isWide),"Wheels - "+(isWide?" Wide":"Normal")));
-        currentInventory.removeWheels(1,isWide);
+        currentInventory.removeWheels(4,isWide);
 
         //Removing Battery
         allTrue.add(validateCount(currentInventory.getBatteryCount(),"Batteries"));
@@ -403,7 +395,7 @@ public class InventoryController {
         return input;
     }
 
-    private static int validateInput(int lowerLimit,int upperLimit, int input, String whatIsWrong){
+    private static boolean validateInput(int lowerLimit,int upperLimit, int input, String whatIsWrong){
         boolean validInput = false;
         while (!validInput) {
             if (input < lowerLimit || input > upperLimit) {
@@ -411,7 +403,7 @@ public class InventoryController {
                 input = getUserInputInt();
             } else validInput = true;
         }
-        return input;
+        return true;
     }
 
     private static int validateCount(int upperLimit, int input, String items){
