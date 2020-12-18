@@ -36,6 +36,14 @@ public class InventoryController {
                     ModelNumber.ATV_MODEL,ModelNumber.DUNE_BUGGY_MODEL,ModelNumber.CRAWLER_MODEL));
     // modelNumbers is a list of model numbers that we access from our enum ModelNumber
 
+    /**
+     * This is the starting point of the application
+     *
+     * This program will run until the user selects 'q' to quit.
+     *
+     * @param
+     * @return a menu
+     */
     public static void bootUp() {
         String userInput = "";
 
@@ -44,7 +52,7 @@ public class InventoryController {
             userInput = getUserInputString();
             userInput =  inventoryActions(userInput);
         }
-    } // I think i would still keep this in main
+    }
 
     public static int getUserInputInt() {
         Scanner userInput = new Scanner(System.in);

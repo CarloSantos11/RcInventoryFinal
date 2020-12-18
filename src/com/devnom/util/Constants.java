@@ -3,6 +3,7 @@ package com.devnom.util;
 import com.devnom.view.InventoryUi;
 
 public class Constants {
+    // http://www.javapractices.com/topic/TopicAction.do?Id=2
 
 //    InventoryUi.getCountPrompt("Body Shell", currentInventory.getBodyShellsCount());
 //    InventoryUi.subItemCountPrompt("Sport", currentInventory.getBodyShellsCount("sport"));
