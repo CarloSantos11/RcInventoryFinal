@@ -17,6 +17,9 @@ public class InventoryController {
     // I created a service layer. That will be where a lot of the business logic will go
     // The Controller should really just delegate where actions are going
 
+    // My advice would be trim the logic in the controller: I also created a util package
+    // a validation package and a service package.
+
     // Create Java Docs For public methods
     // bootUp
     // this method should prompt the first menu and keep the program running as long as we don't press qu
@@ -26,7 +29,7 @@ public class InventoryController {
 
     private static final Inventory currentInventory = new Inventory();
     // Inventory is an object with a list of Arraylists as instance vars
-    // Look into singleton pattern.
+    // Look into singleton pattern?
 
     private static ArrayList<ModelNumber> modelNumbers = new ArrayList<>(
             Arrays.asList(ModelNumber.SPORTS_MODEL,ModelNumber.SUV_MODEL,ModelNumber.CLASSIC_MODEL,
@@ -58,7 +61,7 @@ public class InventoryController {
         }while (!valid);
         return input;
 
-    }
+    }// i may put this in the utils package
 
 
     private static String inventoryActions(String choice) {
