@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Class Level Java Doc
-// We should add java docs: [https://www.youtube.com/watch?v=CJxMwbJPisw]
+// We should add java docs: [https://www.youtube.com/watch?v=CAexSdMCuGg]
 // Document what params go in what needs to come out
 public class InventoryController {
     // I created a service layer. That will be where a lot of the business logic will go
