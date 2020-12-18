@@ -2,8 +2,10 @@ package com.devnom.model;
 
 import java.util.*;
 
-public class Inventory{
+public class Inventory {
 
+    // REFACTOR: I definitely think there is
+    // Rework that can be done here
     ArrayList<Battery> batteries = new ArrayList<>();
     ArrayList<Motor> motors = new ArrayList<>();
     ArrayList<Shell> bodyShells = new ArrayList<>();

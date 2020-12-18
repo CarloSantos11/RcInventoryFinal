@@ -10,19 +10,28 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+// Class Level Java Doc
+// We should add java docs: [https://www.youtube.com/watch?v=CJxMwbJPisw]
+// Document what params go in what needs to come out
 public class InventoryController {
+    // I created a service layer. That will be where a lot of the business logic will go
+    // The Controller should really just delegate where actions are going
+
+    // Create Java Docs For public methods
     // bootUp
     // this method should prompt the first menu and keep the program running as long as we don't press qu
-
     public static void main(String[] args) {
         bootUp();
     }
 
     private static final Inventory currentInventory = new Inventory();
+    // Inventory is an object with a list of Arraylists as instance vars
+    // Look into singleton pattern.
 
     private static ArrayList<ModelNumber> modelNumbers = new ArrayList<>(
             Arrays.asList(ModelNumber.SPORTS_MODEL,ModelNumber.SUV_MODEL,ModelNumber.CLASSIC_MODEL,
                     ModelNumber.ATV_MODEL,ModelNumber.DUNE_BUGGY_MODEL,ModelNumber.CRAWLER_MODEL));
+    // modelNumbers is a list of model numbers that we access from our enum ModelNumber
 
     public static void bootUp() {
         String userInput = "";
@@ -32,14 +41,9 @@ public class InventoryController {
             userInput = getUserInputString();
             userInput =  inventoryActions(userInput);
         }
-    }
+    } // I think i would still keep this in main
 
-    private static String getUserInputString(){
-        Scanner userInput = new Scanner(System.in);
-        return userInput.next();
-    }
-
-    private static int getUserInputInt() {
+    public static int getUserInputInt() {
         Scanner userInput = new Scanner(System.in);
         boolean valid= false;
         int input = -1;
@@ -56,11 +60,12 @@ public class InventoryController {
 
     }
 
+
     private static String inventoryActions(String choice) {
         switch (choice){
             case "1":
                 choice = "1";
-                addToInventory();
+                addToInventory(); // CURRENT CHECK
                 break;
             case "2":
                 checkInventory();
@@ -83,10 +88,6 @@ public class InventoryController {
         return choice;
     }
 
-    // Possibly move these methods to a controller class because they are actions
-    // being performed on our POJOs
-    // some mvc reading: https://stackoverflow.com/questions/1015813/what-goes-into-the-controller-in-mvc
-
     private static void addToInventory() {
 
         InventoryUi.availableItemsPrompt("Add");
@@ -96,7 +97,8 @@ public class InventoryController {
 
         InventoryUi.countPrompt("Add");
         int count = getUserInputInt();
-        boolean validInput = false;//as the addItems()methods return a boolean if there's a problem adding, this checks for the invalid inputs
+        boolean validInput = false; // as the addItems()methods return a
+                                    // boolean if there's a problem adding, this checks for the invalid inputs
 
         while (!validInput) {
             if (count < 0) {
@@ -108,15 +110,9 @@ public class InventoryController {
 
         switch (choice) {
             case 1:
-                InventoryUi.shellTypePrompt();
-                int bodyShellChoice = getUserInputInt();
-                String bodyShellType="";
-                bodyShellChoice = validateInput(Shell.shellTypes.size(),bodyShellChoice,"Shell Type");
-                for (int i = 1;i <= Shell.shellTypes.size();i++){
-                    if (i == bodyShellChoice){
-                        bodyShellType = Shell.shellTypes.get(i-1);
-                    }
-                }
+                // REFACTOR: we should make this more lean
+                // remove the logic from switch
+                String bodyShellType = InventoryUi.shellTypePrompt();
                 currentInventory.addBodyShell(count,bodyShellType);
                 InventoryUi.successfulAdditionPrompt(count,"Body Shell - "+ bodyShellType);
                 break;
@@ -133,6 +129,7 @@ public class InventoryController {
                 InventoryUi.successfulAdditionPrompt(count,"Shocks");
                 break;
             case 5:
+                // REFACTOR: Remove the logic from the Switch
                 InventoryUi.wheelTypePrompt();
                 String wheelType = getUserInputString().toLowerCase();
 
@@ -177,6 +174,7 @@ public class InventoryController {
 
         switch (choice) {
             case 1:
+                // Strings should be put in a constant file: TYPE STATIC and FINAL
                 InventoryUi.getCountPrompt("Body Shell", currentInventory.getBodyShellsCount());
                 InventoryUi.subItemCountPrompt("Sport", currentInventory.getBodyShellsCount("sport"));
                 InventoryUi.subItemCountPrompt("Classic", currentInventory.getBodyShellsCount("classic"));
@@ -392,7 +390,7 @@ public class InventoryController {
         return null;
     }
 
-    private static int validateInput(int upperLimit, int input, String whatIsWrong){
+    public static int validateInput(int upperLimit, int input, String whatIsWrong){
         boolean validInput = false;
         while (!validInput) {
             if (input < 1 || input > upperLimit) {
@@ -431,5 +429,11 @@ public class InventoryController {
             return false;
         }
         return true;
+    }
+
+    // Maybe put these into a helper file
+    private static String getUserInputString(){
+        Scanner userInput = new Scanner(System.in);
+        return userInput.next();
     }
 }

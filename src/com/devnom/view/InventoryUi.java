@@ -1,6 +1,7 @@
 package com.devnom.view;
 
 
+import com.devnom.controller.InventoryController;
 import com.devnom.model.ModelNumber;
 import com.devnom.model.Shell;
 
@@ -48,19 +49,29 @@ public class InventoryUi {
         System.out.println("Enter the number you want to "+ whatToDo+ " :");
     }
 
-    public static void shellTypePrompt(){
+    // REFACTOR: REFACTORING ACROSS SEVERAL METHODS/PACKAGES
+    public static String shellTypePrompt(){
         System.out.println("Enter the type of the Shell.\n"
                 +"Available Shells :");
-        for (int i=0;i<shellTypes.size();i++){
-            System.out.println("\t"+(i+1)+". "+ shellTypes.get(i));
+
+        // < Extract the following for loop to be a method printShellTypes()
+        for (String shell :shellTypes) {
+            int index = shellTypes.indexOf(shell) + 1;
+            System.out.println("\t" + index + ". " + shell);
         }
+        // Extract >
+
+        int bodyShellChoice = InventoryController.getUserInputInt();
+        String bodyShellType="";
+        bodyShellChoice = InventoryController.validateInput(Shell.shellTypes.size(),bodyShellChoice,"Shell Type");
+        return Shell.shellTypes.get(bodyShellChoice -1);
     }
 
     public static void wheelTypePrompt(){
         System.out.println("Do you want the wheels to be wide? (Y/N)");
     }
 
-    public static void invalidInputPrompt(String whatIsWrong){
+    public static void invalidInputPrompt(String whatIsWrong){ // change param name to error
         //the whatIsWrong asks for which input is incorrect so specified message can be sent
         System.err.println("Invalid "+whatIsWrong+ ", Please enter again!");
     }
